@@ -51,7 +51,7 @@ class TaskController extends Controller
 
     public function show(Task $task)
     {
-        $task->load(['steps', 'logs.user', 'assignedUser', 'creator']);
+        $task->load(['steps', 'logs.user', 'assignedUser', 'creator', 'documents.creator']);
         $description_html = \App\Services\MarkdownService::parse($task->description_md);
 
         return view('tasks.show', compact('task', 'description_html'));

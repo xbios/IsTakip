@@ -61,7 +61,8 @@
                     <!-- Task Steps -->
                     <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg p-6">
                         <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
-                            {{ __('Sub-tasks / Steps') }}</h3>
+                            {{ __('Sub-tasks / Steps') }}
+                        </h3>
 
                         <div class="space-y-2 mb-6" x-data="{}">
                             @foreach($task->steps as $step)
@@ -104,8 +105,28 @@
                     </div>
                 </div>
 
-                <!-- Activity Logs -->
-                <div class="space-y-6">
+                <!-- Activity Logs and Related Documents -->
+                <div class="space-y-6" x-data="{ 
+                    showModal: false, 
+                    modalTitle: '', 
+                    modalContent: '', 
+                    loading: false,
+                    openDocument(id) {
+                        this.showModal = true;
+                        this.loading = true;
+                        this.modalTitle = '...';
+                        this.modalContent = '';
+                        
+                        fetch(`/documents/${id}/content`)
+                            .then(response => response.json())
+                            .then(data => {
+                                this.modalTitle = data.title;
+                                this.modalContent = data.html;
+                                this.loading = false;
+                            });
+                    }
+                }">
+                    <!-- Activity Logs -->
                     <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg p-6">
                         <h3 class="text-sm font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-4">
                             {{ __('Activity Log') }}
@@ -148,6 +169,97 @@
                             </ul>
                         </div>
                     </div>
+
+                    <!-- Related Documents -->
+                    <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg p-6">
+                        <h3 class="text-sm font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-4">
+                            {{ __('Related Documents') }}
+                        </h3>
+                        @if($task->documents->count() > 0)
+                            <div class="space-y-3">
+                                @foreach($task->documents as $doc)
+                                    <button type="button" @click="openDocument({{ $doc->id }})"
+                                        class="w-full flex items-center p-3 border dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors group text-left">
+                                        <svg class="w-5 h-5 text-gray-400 group-hover:text-blue-500 mr-3" fill="none"
+                                            stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                                            </path>
+                                        </svg>
+                                        <div class="flex-1">
+                                            <div class="text-sm font-medium text-gray-900 dark:text-gray-100">
+                                                {{ $doc->title }}
+                                            </div>
+                                            <div class="text-xs text-gray-500 dark:text-gray-400">
+                                                {{ $doc->creator->name }} • {{ $doc->created_at->format('d.m.Y') }}
+                                            </div>
+                                        </div>
+                                    </button>
+                                @endforeach
+                            </div>
+                        @else
+                            <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('No related documents found.') }}</p>
+                        @endif
+                    </div>
+
+                    <!-- Modal -->
+                    <template x-teleport="body">
+                        <div x-show="showModal" class="fixed inset-0 z-50 overflow-y-auto" style="display: none;">
+                            <div
+                                class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+                                <div x-show="showModal" x-transition:enter="ease-out duration-300"
+                                    x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+                                    x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100"
+                                    x-transition:leave-end="opacity-0"
+                                    class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75 dark:bg-gray-900 dark:bg-opacity-80"
+                                    @click="showModal = false"></div>
+
+                                <div x-show="showModal" x-transition:enter="ease-out duration-300"
+                                    x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                                    x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                                    x-transition:leave="ease-in duration-200"
+                                    x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                                    x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                                    class="inline-block w-full max-w-4xl p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white dark:bg-gray-800 shadow-xl rounded-lg">
+
+                                    <div
+                                        class="flex items-center justify-between mb-4 border-b dark:border-gray-700 pb-3">
+                                        <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-gray-100"
+                                            x-text="modalTitle"></h3>
+                                        <button @click="showModal = false"
+                                            class="text-gray-400 hover:text-gray-500 focus:outline-none">
+                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M6 18L18 6M6 6l12 12"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+
+                                    <div class="relative min-h-[400px]">
+                                        <div x-show="loading"
+                                            class="absolute inset-0 flex items-center justify-center bg-white dark:bg-gray-800 bg-opacity-50">
+                                            <svg class="w-10 h-10 text-indigo-500 animate-spin"
+                                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                                    stroke-width="4"></circle>
+                                                <path class="opacity-75" fill="currentColor"
+                                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                                </path>
+                                            </svg>
+                                        </div>
+                                        <div class="prose dark:prose-invert max-w-none" x-html="modalContent"></div>
+                                    </div>
+
+                                    <div class="mt-6 flex justify-end">
+                                        <button type="button" @click="showModal = false"
+                                            class="inline-flex justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-600">
+                                            {{ __('Close') }}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
                 </div>
             </div>
         </div>

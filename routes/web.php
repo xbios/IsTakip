@@ -27,6 +27,15 @@ Route::middleware('auth')->group(function () {
             'html' => \App\Services\MarkdownService::parse($request->input('content'))
         ]);
     })->name('markdown.preview');
+
+    Route::post('/media/upload', [\App\Http\Controllers\MediaController::class, 'upload'])->name('media.upload');
+
+    Route::get('/documents/{document}/content', function (\App\Models\Document $document) {
+        return response()->json([
+            'title' => $document->title,
+            'html' => \App\Services\MarkdownService::parse($document->content_md)
+        ]);
+    })->name('documents.content');
 });
 
 require __DIR__ . '/auth.php';
