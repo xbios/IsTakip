@@ -39,6 +39,7 @@
     "Documents": "Belgeler",
     "Unassigned": "Atanmamış",
     "No recent tasks found.": "Yakın zamanda eklenen görev bulunamadı.",
+    "Recent Tasks": "Son Görevler",
     "View all tasks": "Tüm görevleri görüntüle",
     "Log Out": "Çıkış Yap",
     "Actions": "İşlemler",
@@ -74,5 +75,18 @@
     "Watch video tutorials at": "Video eğitimlerini izleyin:",
     "Deploy now": "Hemen yayınla",
     "Related Documents": "İlişkili Belgeler",
-    "No related documents found.": "İlişkili belge bulunamadı."
+    "No related documents found.": "İlişkili belge bulunamadı.",
+    "Attachments": "Dosyalar",
+    "Upload File": "Dosya Yükle",
+    "Select File": "Dosya Seç",
+    "File uploaded successfully.": "Dosya başarıyla yüklendi.",
+    "File could not be uploaded.": "Dosya yüklenemedi.",
+    "File deleted successfully.": "Dosya başarıyla silindi.",
+    "View / Download": "Görüntüle / İndir",
+    "No files found.": "Dosya bulunamadı.",
+    "No files attached.": "Ekli dosya bulunamadı.",
+    "Get started by uploading a new file.": "Yeni bir dosya yükleyerek başlayın.",
+    "Max size: 10MB. Allowed types: PDF, DOC, Excel, PPT, Image, ZIP, RAR, TXT": "Maksimum boyut: 10MB. İzin verilen türler: PDF, DOC, Excel, PPT, Resim, ZIP, RAR, TXT",
+    "Global": "Genel",
+    "Add File": "Dosya Ekle"
 }

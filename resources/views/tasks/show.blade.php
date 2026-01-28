@@ -202,6 +202,60 @@
                         @endif
                     </div>
 
+                    <!-- Attachments -->
+                    <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-sm font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400">
+                                {{ __('Attachments') }}
+                            </h3>
+                            <a href="{{ route('attachments.create', ['task_id' => $task->id]) }}"
+                                class="text-xs text-blue-500 hover:underline">
+                                {{ __('Add File') }}
+                            </a>
+                        </div>
+                        @if($task->attachments->count() > 0)
+                            <div class="space-y-3">
+                                @foreach($task->attachments as $attachment)
+                                    <div
+                                        class="w-full flex items-center justify-between p-3 border dark:border-gray-700 rounded-lg group">
+                                        <div class="flex items-center flex-1 min-w-0">
+                                            @php
+                                                $icon = match (true) {
+                                                    str_contains($attachment->file_type, 'pdf') => 'M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z',
+                                                    str_contains($attachment->file_type, 'image') => 'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z',
+                                                    str_contains($attachment->file_type, 'word') || str_contains($attachment->file_type, 'officedocument') => 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z',
+                                                    default => 'M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'
+                                                };
+                                            @endphp
+                                            <svg class="w-5 h-5 text-gray-400 group-hover:text-indigo-500 mr-3 flex-shrink-0"
+                                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="{{ $icon }}"></path>
+                                            </svg>
+                                            <div class="truncate">
+                                                <div class="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">
+                                                    {{ $attachment->title }}
+                                                </div>
+                                                <div class="text-xs text-gray-500 dark:text-gray-400">
+                                                    {{ $attachment->original_filename }}
+                                                    ({{ number_format($attachment->file_size / 1024 / 1024, 2) }} MB)
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center ml-4 space-x-2">
+                                            <a href="{{ route('attachments.show', $attachment) }}" target="_blank"
+                                                class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 px-2 py-1 rounded transition-colors">
+                                                {{ __('View / Download') }}
+                                            </a>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @else
+                            <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('No files attached.') }}</p>
+                        @endif
+                    </div>
+
                     <!-- Modal -->
                     <template x-teleport="body">
                         <div x-show="showModal" class="fixed inset-0 z-50 overflow-y-auto" style="display: none;">

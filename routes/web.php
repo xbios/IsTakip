@@ -36,6 +36,8 @@ Route::middleware('auth')->group(function () {
             'html' => \App\Services\MarkdownService::parse($document->content_md)
         ]);
     })->name('documents.content');
+
+    Route::resource('attachments', \App\Http\Controllers\AttachmentController::class)->except(['edit', 'update']);
 });
 
 require __DIR__ . '/auth.php';

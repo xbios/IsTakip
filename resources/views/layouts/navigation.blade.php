@@ -21,6 +21,9 @@
                     <x-nav-link :href="route('documents.index')" :active="request()->routeIs('documents.*')">
                         {{ __('Documents') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('attachments.index')" :active="request()->routeIs('attachments.*')">
+                        {{ __('Attachments') }}
+                    </x-nav-link>
                 </div>
             </div>
 

@@ -47,12 +47,12 @@
 
                                 <div class="mt-4 flex space-x-3 opacity-0 group-hover:opacity-100 transition-opacity">
                                     <a href="{{ route('documents.edit', $document) }}"
-                                        class="text-blue-500 hover:text-blue-700">Edit</a>
+                                        class="text-blue-500 hover:text-blue-700">Düzenle</a>
                                     <form action="{{ route('documents.destroy', $document) }}" method="POST"
                                         onsubmit="return confirm('Delete document?')">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="text-red-500 hover:text-red-700">Delete</button>
+                                        <button type="submit" class="text-red-500 hover:text-red-700">Sil</button>
                                     </form>
                                 </div>
                             </div>

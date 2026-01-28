@@ -46,4 +46,9 @@ class Task extends Model
     {
         return $this->hasMany(Document::class, 'related_id')->where('related_type', 'task');
     }
+
+    public function attachments()
+    {
+        return $this->hasMany(Attachment::class);
+    }
 }
