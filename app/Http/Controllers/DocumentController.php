@@ -14,16 +14,26 @@ class DocumentController extends Controller
         $this->authorizeResource(\App\Models\Document::class, 'document');
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $query = \App\Models\Document::with('creator');
 
-        if (!auth()->user()->isAdmin()) {
-            $query->where('created_by', auth()->id())
-                ->orWhere('related_type', 'global');
+        if ($request->has('filter') && $request->filter !== 'hepsi') {
+            if ($request->filter === 'genel') {
+                $query->where('related_type', 'global');
+            } elseif ($request->filter === 'gorev') {
+                $query->where('related_type', 'task');
+            }
         }
 
-        $documents = $query->latest()->paginate(10);
+        if (!auth()->user()->isAdmin()) {
+            $query->where(function ($q) {
+                $q->where('created_by', auth()->id())
+                    ->orWhere('related_type', 'global');
+            });
+        }
+
+        $documents = $query->latest()->paginate(12)->withQueryString();
 
         return view('documents.index', compact('documents'));
     }

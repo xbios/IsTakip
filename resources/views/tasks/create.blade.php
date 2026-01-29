@@ -27,13 +27,17 @@
                                 <select id="status" name="status"
                                     class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
                                     <option value="pending" {{ old('status') == 'pending' ? 'selected' : '' }}>
-                                        {{ __('Pending') }}</option>
+                                        {{ __('Pending') }}
+                                    </option>
                                     <option value="in_progress" {{ old('status') == 'in_progress' ? 'selected' : '' }}>
-                                        {{ __('In progress') }}</option>
+                                        {{ __('In Progress') }}
+                                    </option>
                                     <option value="completed" {{ old('status') == 'completed' ? 'selected' : '' }}>
-                                        {{ __('Completed') }}</option>
+                                        {{ __('Completed') }}
+                                    </option>
                                     <option value="cancelled" {{ old('status') == 'cancelled' ? 'selected' : '' }}>
-                                        {{ __('Cancelled') }}</option>
+                                        {{ __('Cancelled') }}
+                                    </option>
                                 </select>
                                 <x-input-error class="mt-2" :messages="$errors->get('status')" />
                             </div>
@@ -46,9 +50,11 @@
                                     <option value="low" {{ old('priority') == 'low' ? 'selected' : '' }}>{{ __('Low') }}
                                     </option>
                                     <option value="medium" {{ old('priority') == 'medium' ? 'selected' : '' }} selected>
-                                        {{ __('Medium') }}</option>
+                                        {{ __('Medium') }}
+                                    </option>
                                     <option value="high" {{ old('priority') == 'high' ? 'selected' : '' }}>
-                                        {{ __('High') }}</option>
+                                        {{ __('High') }}
+                                    </option>
                                 </select>
                                 <x-input-error class="mt-2" :messages="$errors->get('priority')" />
                             </div>

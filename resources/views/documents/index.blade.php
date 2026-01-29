@@ -21,6 +21,26 @@
                         </div>
                     @endif
 
+                    <div class="mb-8 flex items-center space-x-6 bg-gray-50 dark:bg-gray-700/50 p-4 rounded-xl">
+                        <span class="text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">{{ __('Filtrele') }}:</span>
+                        <div class="flex items-center space-x-4">
+                            @foreach(['hepsi' => 'Hepsi', 'genel' => 'Genel', 'gorev' => 'Görev'] as $value => $label)
+                                <label class="flex items-center cursor-pointer group">
+                                    <input type="radio" name="filter" value="{{ $value }}" 
+                                        class="hidden peer"
+                                        {{ request('filter', 'hepsi') === $value ? 'checked' : '' }}
+                                        onchange="window.location.href = '{{ route('documents.index') }}?filter=' + this.value">
+                                    <div class="px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 
+                                        peer-checked:bg-indigo-600 peer-checked:text-white 
+                                        bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-600
+                                        hover:border-indigo-400 dark:hover:border-indigo-500 shadow-sm">
+                                        {{ __($label) }}
+                                    </div>
+                                </label>
+                            @endforeach
+                        </div>
+                    </div>
+
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach($documents as $document)
                             <div

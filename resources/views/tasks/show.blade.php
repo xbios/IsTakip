@@ -45,8 +45,7 @@
                         <div class="grid grid-cols-2 gap-4 text-sm bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
                             <div>
                                 <span
-                                    class="font-bold block uppercase tracking-wider text-[10px] text-gray-500 dark:text-gray-400">Assigned
-                                    To') }}</span>
+                                    class="font-bold block tracking-wider text-[10px] text-gray-500 dark:text-gray-400">{{ __('Assigned') }}</span>
                                 {{ $task->assignedUser?->name ?? 'Unassigned' }}
                             </div>
                             <div>

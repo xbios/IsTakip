@@ -11,15 +11,23 @@ class AttachmentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(\Illuminate\Http\Request $request)
     {
         $query = Attachment::with(['user', 'task']);
+
+        if ($request->has('filter') && $request->filter !== 'hepsi') {
+            if ($request->filter === 'genel') {
+                $query->whereNull('task_id');
+            } elseif ($request->filter === 'gorev') {
+                $query->whereNotNull('task_id');
+            }
+        }
 
         if (!auth()->user()->isAdmin()) {
             $query->where('user_id', auth()->id());
         }
 
-        $attachments = $query->latest()->paginate(10);
+        $attachments = $query->latest()->paginate(15)->withQueryString();
 
         return view('attachments.index', compact('attachments'));
     }

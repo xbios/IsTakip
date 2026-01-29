@@ -25,12 +25,12 @@
                         <table class="w-full text-left border-collapse">
                             <thead>
                                 <tr class="border-b dark:border-gray-700">
-                                    <th class="py-3 px-4 uppercase font-semibold text-sm">{{ __('Title') }}</th>
-                                    <th class="py-3 px-4 uppercase font-semibold text-sm">{{ __('Status') }}</th>
-                                    <th class="py-3 px-4 uppercase font-semibold text-sm">{{ __('Priority') }}</th>
-                                    <th class="py-3 px-4 uppercase font-semibold text-sm">{{ __('Assigned To') }}</th>
-                                    <th class="py-3 px-4 uppercase font-semibold text-sm">{{ __('Deadline') }}</th>
-                                    <th class="py-3 px-4 uppercase font-semibold text-sm text-right">{{ __('Actions') }}
+                                    <th class="py-3 px-4 font-semibold text-sm">{{ __('Title') }}</th>
+                                    <th class="py-3 px-4 font-semibold text-sm">{{ __('Status') }}</th>
+                                    <th class="py-3 px-4 font-semibold text-sm">{{ __('Priority') }}</th>
+                                    <th class="py-3 px-4 font-semibold text-sm">{{ __('Assigned') }}</th>
+                                    <th class="py-3 px-4 font-semibold text-sm">{{ __('Deadline') }}</th>
+                                    <th class="py-3 px-4 font-semibold text-sm text-right">{{ __('Actions') }}
                                     </th>
                                 </tr>
                             </thead>
@@ -47,10 +47,10 @@
                                         <td class="py-3 px-4">
                                             <span
                                                 class="px-2 py-1 rounded-full text-xs font-semibold
-                                                        @if($task->status === 'pending') bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200
-                                                        @elseif($task->status === 'in_progress') bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200
-                                                        @elseif($task->status === 'completed') bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200
-                                                        @else bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200 @endif">
+                                                                    @if($task->status === 'pending') bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200
+                                                                    @elseif($task->status === 'in_progress') bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200
+                                                                    @elseif($task->status === 'completed') bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200
+                                                                    @else bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200 @endif">
                                                 {{ __(ucfirst(str_replace('_', ' ', $task->status))) }}
                                             </span>
                                         </td>

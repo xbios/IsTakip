@@ -41,7 +41,8 @@
                                 <select id="priority" name="priority"
                                     class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
                                     <option value="low" {{ old('priority', $task->priority) == 'low' ? 'selected' : '' }}>
-                                        {{ __('Low') }}</option>
+                                        {{ __('Low') }}
+                                    </option>
                                     <option value="medium" {{ old('priority', $task->priority) == 'medium' ? 'selected' : '' }}>{{ __('Medium') }}</option>
                                     <option value="high" {{ old('priority', $task->priority) == 'high' ? 'selected' : '' }}>{{ __('High') }}</option>
                                 </select>

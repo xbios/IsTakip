@@ -22,6 +22,8 @@ class DashboardController extends Controller
                 ->count(),
             'total_documents' => \App\Models\Document::when(!$user->isAdmin(), fn($q) => $q->where('created_by', $user->id)->orWhere('related_type', 'global'))
                 ->count(),
+            'total_attachments' => \App\Models\Attachment::when(!$user->isAdmin(), fn($q) => $q->where('user_id', $user->id))
+                ->count(),
         ];
 
         $recent_tasks = \App\Models\Task::with('assignedUser')
